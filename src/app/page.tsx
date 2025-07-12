@@ -70,7 +70,9 @@ export default function WalletPage() {
     setShowSecretPhrase(false);
   };
 
-
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
 
   const togglePrivateKey = (index: number) => {
     setShowPrivateKey(prev => ({
@@ -166,10 +168,16 @@ export default function WalletPage() {
                      <label className="block text-lg font-medium text-gray-300 mb-3">
                        Public Key
                      </label>
-                     <div>
-                       <code className="block bg-gray-800 px-4 py-3 rounded-lg text-base font-mono break-all">
+                     <div className="flex items-center gap-4">
+                       <code className="flex-1 bg-gray-800 px-4 py-3 rounded-lg text-base font-mono break-all">
                          {wallet.publicKey}
                        </code>
+                       <button
+                         onClick={() => copyToClipboard(wallet.publicKey)}
+                         className="text-blue-400 hover:text-blue-300 text-base px-3 py-1 rounded border border-blue-400 hover:border-blue-300"
+                       >
+                         Copy
+                       </button>
                      </div>
                    </div>
 
@@ -193,6 +201,14 @@ export default function WalletPage() {
                            )}
                          </svg>
                        </button>
+                       {showPrivateKey[index] && (
+                         <button
+                           onClick={() => copyToClipboard(wallet.privateKey)}
+                           className="text-blue-400 hover:text-blue-300 text-base px-3 py-1 rounded border border-blue-400 hover:border-blue-300"
+                         >
+                           Copy
+                         </button>
+                       )}
                      </div>
                    </div>
                  </div>
